@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a1a2e">
     <title>My Projects - Style Hub</title>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <style>
         /* Critical CSS for initial render */
         html {
             scroll-behavior: smooth;
+        }
+        
+        /* Prevent layout shift */
+        .projects-grid {
+            min-height: 200px;
+        }
+        
+        /* Optimize font rendering */
+        * {
+            text-rendering: optimizeSpeed;
+        }
+        
+        /* Critical above-the-fold styles */
+        body {
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +91,7 @@
 
         .project-card:not(:hover) {
             content-visibility: auto;
+            contain-intrinsic-size: auto 300px;
         }
 
         /* GPU acceleration for all hover transforms */
@@ -78,6 +101,19 @@
 
         .project-card:hover .preview-window {
             will-change: transform;
+        }
+
+        /* Optimize rendering performance */
+        .projects-grid > * {
+            contain: layout style paint;
+        }
+
+        /* Reduce paint operations */
+        .preview-window,
+        .window-header,
+        .loading-overlay {
+            backface-visibility: hidden;
+            perspective: 1000px;
         }
 
         .project-card {
@@ -198,6 +234,74 @@
             opacity: 0.8;
             word-break: break-all;
             transition: all 0.3s ease;
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            transition: opacity 0.3s ease;
+        }
+
+        .sort-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .sort-btn {
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+            border-radius: 4px;
+            will-change: transform;
+            transform: translateZ(0);
+            font-size: 0.65rem;
+        }
+
+        .sort-btn:hover {
+            transform: scale(1.05) translateZ(0);
+        }
+
+        .sort-btn.active {
+            transform: scale(1.1) translateZ(0);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+            contain: layout;
+        }
+
+        .project-card {
+            padding: 15px;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+        }
+
+        .project-card.hidden {
+            display: none;
+        }
+
+        .project-card.sorting {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
         }
 
         .style-footer {
@@ -329,6 +433,26 @@
             border-color: #ffd93d;
         }
 
+        body[data-theme="8bit"] .sort-label {
+            color: #4ecdc4;
+            text-shadow: 1px 1px 0px #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+        }
+
+        body[data-theme="8bit"] .sort-btn {
+            background: #2d2d44;
+            color: #fff;
+            border: 2px solid #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+        }
+
+        body[data-theme="8bit"] .sort-btn.active {
+            background: #ff6b6b;
+            border-color: #ffd93d;
+        }
+
         /* ========== MODERN MINIMALIST THEME ========== */
         body[data-theme="minimal"] {
             font-family: 'Inter', sans-serif;
@@ -424,6 +548,26 @@
         }
 
         body[data-theme="minimal"] .style-btn.active {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        body[data-theme="minimal"] .sort-label {
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+        }
+
+        body[data-theme="minimal"] .sort-btn {
+            background: #fff;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+        }
+
+        body[data-theme="minimal"] .sort-btn.active {
             background: #1a1a1a;
             color: #fff;
         }
@@ -1680,8 +1824,15 @@
             <p class="subtitle">★ CLICK TO EXPLORE ★</p>
         </div>
 
+        <div class="sort-controls">
+            <span class="sort-label">SORT BY:</span>
+            <button class="sort-btn active" data-sort="default">DEFAULT</button>
+            <button class="sort-btn" data-sort="title">TITLE</button>
+            <button class="sort-btn" data-sort="date">DATE</button>
+        </div>
+
         <div class="projects-grid">
-            <a href="https://egil10.github.io/quizquaz/" target="_blank" class="project-card">
+            <a href="https://egil10.github.io/quizquaz/" target="_blank" class="project-card" data-title="quizquaz" data-date="2024">
                 <div class="preview-window">
                     <div class="window-header">
                         <div class="window-dots">
@@ -1701,7 +1852,7 @@
                 </div>
             </a>
 
-            <a href="https://www.notemarket.no/" target="_blank" class="project-card">
+            <a href="https://www.notemarket.no/" target="_blank" class="project-card" data-title="note market" data-date="2024">
                 <div class="preview-window">
                     <div class="window-header">
                         <div class="window-dots">
@@ -2141,7 +2292,7 @@
                 </div>
             </a>
 
-            <a href="https://pro-con-chi.vercel.app/" target="_blank" class="project-card">
+            <a href="https://pro-con-chi.vercel.app/" target="_blank" class="project-card" data-title="pro con chi" data-date="2024">
                 <div class="preview-window">
                     <div class="window-header">
                         <div class="window-dots">
@@ -2158,6 +2309,26 @@
                 <div class="project-info">
                     <div class="project-name">PRO CON CHI</div>
                     <div class="project-url">pro-con-chi.vercel.app</div>
+                </div>
+            </a>
+
+            <a href="https://peoples-peach.vercel.app/" target="_blank" class="project-card" data-title="peoples peach" data-date="2024">
+                <div class="preview-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                    </div>
+                    <div class="loading-overlay">
+                        <div class="loading-text">LOADING...</div>
+                    </div>
+                    <iframe class="preview-iframe" src="https://peoples-peach.vercel.app/" loading="lazy"></iframe>
+                </div>
+                <div class="project-info">
+                    <div class="project-name">PEOPLES PEACH</div>
+                    <div class="project-url">peoples-peach.vercel.app</div>
                 </div>
             </a>
         </div>
@@ -2253,8 +2424,138 @@
             });
         });
 
+        // High-performance sorting functionality
+        const sortButtons = document.querySelectorAll('.sort-btn');
+        const projectsGrid = document.querySelector('.projects-grid');
+        let currentSort = 'default';
+        let sortAnimationFrame = null;
+
+        // Extract sort data from project cards with performance optimization
+        function initializeProjectData() {
+            const cards = document.querySelectorAll('.project-card');
+            // Use requestIdleCallback for non-critical initialization
+            const initData = (deadline) => {
+                let i = 0;
+                while (deadline.timeRemaining() > 0 && i < cards.length) {
+                    const card = cards[i];
+                    if (!card.hasAttribute('data-title')) {
+                        const titleEl = card.querySelector('.project-name');
+                        if (titleEl) {
+                            card.setAttribute('data-title', titleEl.textContent.trim().toLowerCase());
+                        }
+                    }
+                    if (!card.hasAttribute('data-date')) {
+                        card.setAttribute('data-date', '2024');
+                    }
+                    i++;
+                }
+                if (i < cards.length) {
+                    requestIdleCallback(initData);
+                }
+            };
+            
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(initData);
+            } else {
+                // Fallback for browsers without requestIdleCallback
+                cards.forEach(card => {
+                    if (!card.hasAttribute('data-title')) {
+                        const titleEl = card.querySelector('.project-name');
+                        if (titleEl) {
+                            card.setAttribute('data-title', titleEl.textContent.trim().toLowerCase());
+                        }
+                    }
+                    if (!card.hasAttribute('data-date')) {
+                        card.setAttribute('data-date', '2024');
+                    }
+                });
+            }
+        }
+
+        // High-performance sorting using DocumentFragment and optimized animations
+        function sortProjects(sortType) {
+            if (sortAnimationFrame) {
+                cancelAnimationFrame(sortAnimationFrame);
+            }
+
+            sortAnimationFrame = raf(() => {
+                const cards = Array.from(document.querySelectorAll('.project-card'));
+                
+                // Temporarily disable transitions for faster sorting
+                const originalTransition = projectsGrid.style.transition;
+                projectsGrid.style.transition = 'none';
+                
+                // Add sorting class for transition
+                cards.forEach(card => {
+                    card.style.willChange = 'transform, opacity';
+                    card.classList.add('sorting');
+                });
+
+                // Sort cards
+                cards.sort((a, b) => {
+                    if (sortType === 'title') {
+                        const titleA = (a.getAttribute('data-title') || '').toLowerCase();
+                        const titleB = (b.getAttribute('data-title') || '').toLowerCase();
+                        return titleA.localeCompare(titleB);
+                    } else if (sortType === 'date') {
+                        const dateA = parseInt(a.getAttribute('data-date') || '0');
+                        const dateB = parseInt(b.getAttribute('data-date') || '0');
+                        return dateB - dateA; // Newest first
+                    }
+                    return 0; // Default order (maintains original DOM order)
+                });
+
+                // Use DocumentFragment for efficient DOM manipulation
+                const fragment = document.createDocumentFragment();
+                cards.forEach(card => {
+                    fragment.appendChild(card);
+                });
+
+                // Single DOM update
+                projectsGrid.appendChild(fragment);
+                
+                // Re-enable transitions
+                raf(() => {
+                    projectsGrid.style.transition = originalTransition;
+                    cards.forEach(card => {
+                        card.style.willChange = '';
+                        card.classList.remove('sorting');
+                    });
+                });
+            });
+        }
+
+        // Sort button handlers
+        sortButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const sortType = button.getAttribute('data-sort');
+                currentSort = sortType;
+                
+                // Update active button
+                sortButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Perform sort
+                sortProjects(sortType);
+                
+                // Save preference
+                localStorage.setItem('sort', sortType);
+            });
+        });
+
+        // Load saved sort preference
+        const savedSort = localStorage.getItem('sort') || 'default';
+        if (savedSort !== 'default') {
+            const savedButton = document.querySelector(`.sort-btn[data-sort="${savedSort}"]`);
+            if (savedButton) {
+                savedButton.click();
+            }
+        }
+
         // Optimized iframe loading with lazy loading and state caching
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize project data for sorting
+            initializeProjectData();
             const iframes = document.querySelectorAll('.preview-iframe');
             
             // Store original src for each iframe to prevent reloads
