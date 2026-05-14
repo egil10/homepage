@@ -57,6 +57,6 @@ GitHub profile: [github.com/egil10](https://github.com/egil10)
 
 ## About This Homepage
 
-The homepage itself is intentionally simple to deploy: no framework, no package install, and no build step. The visual system lives directly in `index.html` and uses static project metadata for fast rendering, search, filtering, loading animation, scroll reveal, and responsive cards.
+The homepage itself is intentionally simple to deploy: no framework, no package install, and no build step. The visual system lives directly in `index.html` and uses static project metadata for fast rendering, search, filtering, a grid/list view toggle, loading animation, scroll reveal, and responsive cards.
 
 Kukula deployments are intentionally left out of this public portfolio index.

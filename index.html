@@ -415,6 +415,14 @@
       backdrop-filter: blur(16px);
     }
 
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     .search {
       flex: 1;
       min-width: 180px;
@@ -458,6 +466,62 @@
       border-color: rgba(17, 19, 24, 0.14);
       background: #111318;
       color: #fff;
+    }
+
+    .view-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      min-height: 36px;
+      padding: 2px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .view-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 650;
+      transition: color 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease);
+    }
+
+    .view-button[aria-pressed="true"] {
+      border-color: rgba(17, 19, 24, 0.12);
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    }
+
+    .view-icon {
+      display: grid;
+      width: 14px;
+      height: 14px;
+      gap: 2px;
+      flex: 0 0 auto;
+    }
+
+    .view-icon span {
+      border-radius: 2px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    .grid-icon {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .list-icon {
+      grid-template-rows: repeat(3, 1fr);
     }
 
     .project-grid {
@@ -508,6 +572,54 @@
 
     .project-card.hidden {
       display: none;
+    }
+
+    .project-grid.is-list {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .project-grid.is-list .project-card,
+    .project-grid.is-list .project-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(140px, 0.72fr) minmax(0, 1.5fr) minmax(210px, 0.72fr);
+      align-items: center;
+      gap: 18px;
+      min-height: 0;
+      padding: 14px 16px;
+    }
+
+    .project-grid.is-list .project-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .project-grid.is-list .card-top {
+      min-width: 0;
+      align-items: center;
+    }
+
+    .project-grid.is-list .preview {
+      display: none;
+    }
+
+    .project-grid.is-list .project-name,
+    .project-grid.is-list .project-card:not(.featured) .project-name {
+      font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+      line-height: 1.1;
+    }
+
+    .project-grid.is-list .project-desc {
+      min-height: 0;
+      margin-top: 6px;
+      font-size: 0.92rem;
+      line-height: 1.42;
+    }
+
+    .project-grid.is-list .card-footer {
+      justify-content: flex-end;
+      margin-top: 0;
+      text-align: right;
     }
 
     .card-top {
@@ -1129,6 +1241,10 @@
         display: grid;
       }
 
+      .toolbar-actions {
+        justify-content: flex-start;
+      }
+
       .filters {
         justify-content: flex-start;
       }
@@ -1137,6 +1253,19 @@
       .project-card.featured {
         grid-column: 1 / -1;
         min-height: 320px;
+      }
+
+      .project-grid.is-list .project-card,
+      .project-grid.is-list .project-card.featured {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        min-height: 0;
+      }
+
+      .project-grid.is-list .card-footer {
+        align-items: flex-start;
+        justify-content: space-between;
+        text-align: left;
       }
 
       .stats {
@@ -1272,14 +1401,26 @@
         <label class="search" aria-label="Search projects">
           <input id="projectSearch" type="search" placeholder="Search projects, domains, tags">
         </label>
-        <div class="filters" aria-label="Project filters">
-          <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
-          <button class="filter" type="button" data-filter="data" aria-pressed="false">Data</button>
-          <button class="filter" type="button" data-filter="quiz" aria-pressed="false">Quiz</button>
-          <button class="filter" type="button" data-filter="map" aria-pressed="false">Maps</button>
-          <button class="filter" type="button" data-filter="tool" aria-pressed="false">Tools</button>
-          <button class="filter" type="button" data-filter="education" aria-pressed="false">Education</button>
-          <button class="filter" type="button" data-filter="music" aria-pressed="false">Music</button>
+        <div class="toolbar-actions">
+          <div class="filters" aria-label="Project filters">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter" type="button" data-filter="data" aria-pressed="false">Data</button>
+            <button class="filter" type="button" data-filter="quiz" aria-pressed="false">Quiz</button>
+            <button class="filter" type="button" data-filter="map" aria-pressed="false">Maps</button>
+            <button class="filter" type="button" data-filter="tool" aria-pressed="false">Tools</button>
+            <button class="filter" type="button" data-filter="education" aria-pressed="false">Education</button>
+            <button class="filter" type="button" data-filter="music" aria-pressed="false">Music</button>
+          </div>
+          <div class="view-toggle" aria-label="Project view">
+            <button class="view-button" type="button" data-view="grid" aria-pressed="true">
+              <span class="view-icon grid-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+              <span>Grid</span>
+            </button>
+            <button class="view-button" type="button" data-view="list" aria-pressed="false">
+              <span class="view-icon list-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span>List</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1535,8 +1676,15 @@
     const archiveGrid = document.getElementById("archiveGrid");
     const searchInput = document.getElementById("projectSearch");
     const filters = Array.from(document.querySelectorAll(".filter"));
+    const viewButtons = Array.from(document.querySelectorAll(".view-button"));
     const emptyState = document.getElementById("emptyState");
     let activeFilter = "all";
+    let activeView = "grid";
+
+    try {
+      const savedView = window.localStorage.getItem("projectView");
+      if (savedView === "list") activeView = "list";
+    } catch {}
 
     function domain(url) {
       try {
@@ -1592,8 +1740,25 @@
     function render() {
       grid.innerHTML = projects.map(card).join("");
       archiveGrid.innerHTML = archive.map(card).join("");
+      setView(activeView, false);
       observeCards();
       applyFilters();
+    }
+
+    function setView(view, persist = true) {
+      activeView = view === "list" ? "list" : "grid";
+      [grid, archiveGrid].forEach((container) => {
+        container.classList.toggle("is-list", activeView === "list");
+      });
+      viewButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.view === activeView));
+      });
+
+      if (persist) {
+        try {
+          window.localStorage.setItem("projectView", activeView);
+        } catch {}
+      }
     }
 
     function applyFilters() {
@@ -1662,6 +1827,10 @@
     });
 
     searchInput.addEventListener("input", applyFilters);
+
+    viewButtons.forEach((button) => {
+      button.addEventListener("click", () => setView(button.dataset.view));
+    });
 
     window.addEventListener("pointermove", (event) => {
       document.body.style.setProperty("--mx", `${event.clientX}px`);
