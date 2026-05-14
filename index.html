@@ -472,12 +472,11 @@
     .view-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
       min-height: 36px;
-      padding: 2px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.64);
+      padding: 0;
+      border: 0;
+      background: transparent;
     }
 
     .view-button {
@@ -1312,7 +1311,6 @@
       </a>
       <div class="nav-links">
         <a href="#projects">Projects</a>
-        <a href="#archive">Archive</a>
         <a class="github-link" href="https://github.com/egil10" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </nav>
@@ -1393,7 +1391,7 @@
         <div>
           <div class="eyebrow">Selected live work</div>
           <h2>Built sites, not thumbnails.</h2>
-          <p class="section-note">The newest public Vercel projects are first, with the older GitHub Pages and custom-domain work kept in a quieter archive below.</p>
+          <p class="section-note">A single searchable collection of public Vercel projects, GitHub Pages builds, custom-domain work, and useful experiments.</p>
         </div>
         <a class="ghost-link" href="https://vercel.com" target="_blank" rel="noreferrer">Vercel-led refresh</a>
       </div>
@@ -1429,19 +1427,8 @@
       <div class="empty" id="emptyState">No project matches that filter.</div>
     </section>
 
-    <section id="archive" style="margin-top: 72px;">
-      <div class="section-head fade-up">
-        <div>
-          <div class="eyebrow">Archive</div>
-          <h2>Earlier experiments.</h2>
-          <p class="section-note">Older public builds and custom-domain projects that still belong in the collection.</p>
-        </div>
-      </div>
-      <div class="project-grid" id="archiveGrid"></div>
-    </section>
-
     <footer class="footer">
-      <span>Updated from GitHub and Vercel project hints on May 14, 2026.</span>
+      <span>From Bergen. I like turning ideas into websites, moving fast from spark to prototype to something people can use.</span>
       <a class="ghost-link" href="#top">Back to top</a>
     </footer>
   </main>
@@ -1639,14 +1626,14 @@
         url: "https://github.com/egil10/morrobank",
         repo: "https://github.com/egil10/morrobank",
         desc: "Editorial comedy-bank redesign with icons, photos, and a large comedian dataset.",
-        tags: ["data", "editorial", "archive"],
+        tags: ["data", "editorial"],
         type: "data",
         accent: "#c94040",
         preview: "table"
       }
     ];
 
-    const archive = [
+    const moreProjects = [
       ["Quizquaz", "https://egil10.github.io/quizquaz/", "https://github.com/egil10/quizquaz", "Quiz experiment with a lightweight GitHub Pages deployment.", "quiz", "#c94040", "quiz"],
       ["Riksdata", "https://riksdata.org/", "https://github.com/egil10/riksdata", "Custom-domain data project for public information browsing.", "data", "#1c7c54", "table"],
       ["GPFG Quiz", "https://egil10.github.io/gpfg-quiz/", "https://github.com/egil10/gpfg-quiz", "Quiz experience around the Norwegian sovereign wealth fund.", "quiz", "#c94040", "quiz"],
@@ -1658,7 +1645,7 @@
       ["Music", "https://egil10.github.io/music/", "https://github.com/egil10/music", "Music interface from the earlier GitHub Pages collection.", "music", "#b7791f", "music"],
       ["Estimation", "https://egil10.github.io/estimation/", "https://github.com/egil10/estimation", "Estimation practice and numerical intuition tool.", "education", "#2f5bea", "quiz"],
       ["UK Not OK", "https://egil10.github.io/UKnotOK/", "https://github.com/egil10/UKnotOK", "Public-facing political or civic web experiment.", "data", "#c94040", "table"],
-      ["Tour Guide", "https://egil10.github.io/tourguide/", "https://github.com/egil10/tourguide", "Travel-guide style website from the GitHub Pages archive.", "tool", "#b7791f", "default"],
+      ["Tour Guide", "https://egil10.github.io/tourguide/", "https://github.com/egil10/tourguide", "Travel-guide style website from the GitHub Pages collection.", "tool", "#b7791f", "default"],
       ["Kunst Quiz", "https://kunstquiz.art/", "", "Art quiz on a custom domain.", "quiz", "#7657c9", "quiz"],
       ["Kadonk Online", "https://egil10.github.io/kadonk-online/", "https://github.com/egil10/kadonk-online", "Compact earlier website from the public repository list.", "tool", "#111318", "default"],
       ["IBDP Rep", "https://egil10.github.io/ibdprep/", "", "Older IB preparation page kept for continuity.", "education", "#2f5bea", "table"]
@@ -1670,11 +1657,11 @@
       type,
       accent,
       preview,
-      tags: [type, "archive"]
+      tags: [type]
     }));
 
+    const allProjects = projects.concat(moreProjects);
     const grid = document.getElementById("projectGrid");
-    const archiveGrid = document.getElementById("archiveGrid");
     const searchInput = document.getElementById("projectSearch");
     const filters = Array.from(document.querySelectorAll(".filter"));
     const viewButtons = Array.from(document.querySelectorAll(".view-button"));
@@ -1702,7 +1689,7 @@
         .replace(/^-|-$/g, "");
     }
 
-    function card(project) {
+    function card(project, index) {
       const tags = project.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
       const liveLabel = project.url.includes("github.com") ? "Repo" : "Live";
       const repo = project.repo && project.repo !== project.url
@@ -1711,7 +1698,7 @@
       const visualClass = `v-${slug(project.name)}`;
 
       return `
-        <article class="project-card${project.featured ? " featured" : ""}" data-type="${project.type}" data-search="${[
+        <article class="project-card${project.featured ? " featured" : ""}" data-type="${project.type}" data-index="${index}" data-name="${project.name.toLowerCase()}" data-search="${[
           project.name,
           project.desc,
           project.type,
@@ -1739,17 +1726,30 @@
     }
 
     function render() {
-      grid.innerHTML = projects.map(card).join("");
-      archiveGrid.innerHTML = archive.map(card).join("");
+      grid.innerHTML = allProjects.map(card).join("");
       setView(activeView, false);
       observeCards();
       applyFilters();
     }
 
+    function sortForView(container) {
+      const cards = Array.from(container.querySelectorAll(".project-card"));
+      const collator = new Intl.Collator("en", { sensitivity: "base", numeric: true });
+      cards
+        .sort((a, b) => {
+          if (activeView === "list") {
+            return collator.compare(a.dataset.name, b.dataset.name);
+          }
+          return Number(a.dataset.index) - Number(b.dataset.index);
+        })
+        .forEach((cardItem) => container.appendChild(cardItem));
+    }
+
     function setView(view, persist = true) {
       activeView = view === "list" ? "list" : "grid";
-      [grid, archiveGrid].forEach((container) => {
+      [grid].forEach((container) => {
         container.classList.toggle("is-list", activeView === "list");
+        sortForView(container);
       });
       viewButtons.forEach((button) => {
         button.setAttribute("aria-pressed", String(button.dataset.view === activeView));

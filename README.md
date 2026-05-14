@@ -35,7 +35,7 @@ GitHub profile: [github.com/egil10](https://github.com/egil10)
 | Peoples | [peoples-nu.vercel.app](https://peoples-nu.vercel.app) | [egil10/peoples](https://github.com/egil10/peoples) | People-oriented data interface for browsing names, profiles, and related records. |
 | Morrobank | [GitHub repository](https://github.com/egil10/morrobank) | [egil10/morrobank](https://github.com/egil10/morrobank) | Editorial comedy-bank redesign with icons, photos, and a large comedian dataset. |
 
-## Archive And Earlier Experiments
+## More Projects
 
 | Project | Live website | Repository | Description |
 | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ GitHub profile: [github.com/egil10](https://github.com/egil10)
 | Music | [egil10.github.io/music](https://egil10.github.io/music/) | [egil10/music](https://github.com/egil10/music) | Music interface from the earlier GitHub Pages collection. |
 | Estimation | [egil10.github.io/estimation](https://egil10.github.io/estimation/) | [egil10/estimation](https://github.com/egil10/estimation) | Estimation practice and numerical intuition tool. |
 | UK Not OK | [egil10.github.io/UKnotOK](https://egil10.github.io/UKnotOK/) | [egil10/UKnotOK](https://github.com/egil10/UKnotOK) | Public-facing political or civic web experiment. |
-| Tour Guide | [egil10.github.io/tourguide](https://egil10.github.io/tourguide/) | [egil10/tourguide](https://github.com/egil10/tourguide) | Travel-guide style website from the GitHub Pages archive. |
+| Tour Guide | [egil10.github.io/tourguide](https://egil10.github.io/tourguide/) | [egil10/tourguide](https://github.com/egil10/tourguide) | Travel-guide style website from the GitHub Pages collection. |
 | Kunst Quiz | [kunstquiz.art](https://kunstquiz.art/) | Not public in this index | Art quiz on a custom domain. |
 | Kadonk Online | [egil10.github.io/kadonk-online](https://egil10.github.io/kadonk-online/) | [egil10/kadonk-online](https://github.com/egil10/kadonk-online) | Compact earlier website from the public repository list. |
 | IBDP Rep | [egil10.github.io/ibdprep](https://egil10.github.io/ibdprep/) | Not public in this index | Older IB preparation page kept for continuity. |
