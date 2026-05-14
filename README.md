@@ -1,4 +1,4 @@
-# Egil Visted - Project Index
+# Egil10 - Project Index
 
 This repository hosts the static homepage for my public web projects. The page is designed as a minimal, fast-loading project index: one `index.html` file with curated links to live websites, GitHub repositories, and short notes on what each project does.
 
