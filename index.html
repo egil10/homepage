@@ -192,6 +192,27 @@
       background: rgba(17, 19, 24, 0.04);
     }
 
+    .shuffle-link {
+      gap: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .shuffle-link span,
+    #shuffleHero span {
+      display: inline-block;
+      transition: transform 360ms var(--ease);
+    }
+
+    .shuffle-link:hover span,
+    #shuffleHero:hover span {
+      transform: rotate(180deg);
+    }
+
+    #shuffleHero {
+      cursor: pointer;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
@@ -1315,6 +1336,7 @@
       </a>
       <div class="nav-links">
         <a href="#projects">Projects</a>
+        <button class="ghost-link shuffle-link" id="shuffleNav" type="button" title="Jump to a random project">Shuffle <span aria-hidden="true">&#8644;</span></button>
         <a class="github-link" href="https://github.com/egil10" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </nav>
@@ -1328,6 +1350,7 @@
         </p>
         <div class="hero-actions fade-up">
           <a class="button" href="#projects">View live work <span aria-hidden="true">-></span></a>
+          <button class="button secondary" id="shuffleHero" type="button">Shuffle a project <span aria-hidden="true">&#8644;</span></button>
           <a class="button secondary" href="https://github.com/egil10" target="_blank" rel="noreferrer">Open GitHub <span aria-hidden="true">-></span></a>
         </div>
       </div>
@@ -1992,6 +2015,18 @@
     });
 
     searchInput.addEventListener("input", applyFilters);
+
+    function shuffleToProject() {
+      const visible = Array.from(grid.querySelectorAll(".project-card:not(.hidden)"));
+      const pool = visible.length
+        ? visible.map((item) => allProjects[Number(item.dataset.index)])
+        : allProjects;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick) window.open(pick.url, "_blank", "noreferrer");
+    }
+
+    document.getElementById("shuffleNav").addEventListener("click", shuffleToProject);
+    document.getElementById("shuffleHero").addEventListener("click", shuffleToProject);
 
     viewButtons.forEach((button) => {
       button.addEventListener("click", () => setView(button.dataset.view));
