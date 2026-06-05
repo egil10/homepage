@@ -54,6 +54,9 @@ GitHub profile: [github.com/egil10](https://github.com/egil10)
 | Kunst Quiz | [kunstquiz.art](https://kunstquiz.art/) | Not public in this index | Art quiz on a custom domain. |
 | Kadonk Online | [egil10.github.io/kadonk-online](https://egil10.github.io/kadonk-online/) | [egil10/kadonk-online](https://github.com/egil10/kadonk-online) | Compact earlier website from the public repository list. |
 | IBDP Rep | [egil10.github.io/ibdprep](https://egil10.github.io/ibdprep/) | Not public in this index | Older IB preparation page kept for continuity. |
+| Tic Tac Toe | [egil10.github.io/tictactoe](https://egil10.github.io/tictactoe/) | [egil10/tictactoe](https://github.com/egil10/tictactoe) | Tic-tac-toe with optimal-move hints for both players and live outcome prediction. |
+| Morning Coffee | [egil10.github.io/morning-coffee](https://egil10.github.io/morning-coffee/) | [egil10/morning-coffee](https://github.com/egil10/morning-coffee) | Automated daily news briefings gathered by an agent, emailed at dawn, and archived on the page. |
+| Loading Lab | [egil10.github.io/loading](https://egil10.github.io/loading/) | [egil10/loading](https://github.com/egil10/loading) | Interactive gravity-and-loading demo that reacts to cursor movement. |
 
 ## About This Homepage
 
