@@ -2,7 +2,7 @@
 
 This repository hosts the static homepage for my public web projects. The page is designed as a minimal, fast-loading project index: one `index.html` file with curated links to live websites, GitHub repositories, and short notes on what each project does.
 
-Live homepage: [egil10.github.io/homepage](https://egil10.github.io/homepage/)
+Live homepage: [egilfurnes.com](https://egilfurnes.com/)
 
 GitHub profile: [github.com/egil10](https://github.com/egil10)
 
